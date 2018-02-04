@@ -18,9 +18,10 @@ Leemis.m = function(votes){
     m.list <- c(m.list, (count[i]/length(votes))-log10(1+1/i))
   }
   m <- max(m.list) 
-  return(m)
+  print(m)
+  print(count)
 }
-
+Leemis.m(votes)
 ##Cho-Gains' d statistic
 CG.d = function(votes){
   leads = NULL
