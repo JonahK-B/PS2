@@ -1,8 +1,9 @@
-##Leemis' m statistic
-votes <- c(rep(c(1,2,3), 5000))
 
+votes <- c(1:1000)
 
-Leemis.m = function(votes){
+##count the lead digits
+
+countleads = function(votes){
   leads = NULL
   leads <- c(leads, substr(votes,1,1))
   count = c(rep.int(0,9))
@@ -13,36 +14,54 @@ Leemis.m = function(votes){
       }
     }
   }
+  return(count)
+}
+
+##Leemis' m statistic
+
+Leemis.m = function(votes){
+ countleads(votes)
   m.list = NULL
   for(i in 1:9){
-    m.list <- c(m.list, (count[i]/length(votes))-log10(1+1/i))
+    m.list <- c(m.list, (countleads(votes)[i]/length(votes))-log10(1+1/i))
   }
   m <- max(m.list) 
-  print(m)
-  print(count)
+  return(m)
 }
 Leemis.m(votes)
 ##Cho-Gains' d statistic
 CG.d = function(votes){
-  leads = NULL
-  leads <- c(leads, substr(votes,1,1))
-  count = c(rep.int(0,9))
-  for(i in 1:9){
-    for(j in 1:length(leads)){
-      if (i == leads[j]){
-        count[i] <- count[i]+1
-      }
-    }
-  }
+  countleads(votes)
   d.list = NULL
   for(i in 1:9){
-    d.list <- c(d.list, ((count[i]/length(votes))-log10(1+1/i))^2)
+    d.list <- c(d.list, ((countleads(votes)[i]/length(votes))-log10(1+1/i))^2)
   }
   d.near <- sum(d.list)
   d <- sqrt(d.near)
   return(d)
 }
+CG.d(votes)
 
+
+##Coalesces all other functions together/answer to part one
+Bias.stats = function(votes, get.m = TRUE, get.d = TRUE){
+  m <- Leemis.m(votes)
+  d <- CG.d(votes)
+  count <- countleads(votes)
+  if(get.m == TRUE & get.d == TRUE){
+    my_list <- list("count" = count, "m" = m, "d" = d)
+    return(my_list)
+  }
+  if(get.m == TRUE & get.d == FALSE){
+    my_list <- list("count" = count, "m" = m)
+    return(my_list)
+  }
+  if(get.m == FALSE & get.d == TRUE){
+    my_list <- list("count" = count, "d" = d)
+    return(my_list)
+  }
+}
+Bias.stats(votes)
 ## display whether null hypothesis can be rejcted as well as the level of confidence
 bias.detector = function(m, d){
   if(m < .851| d < 1.212){
@@ -59,21 +78,5 @@ bias.detector = function(m, d){
   }
 }
 
-##Coalesces all other functions together
-Bias.stats = function(votes, get.m = TRUE, get.d = TRUE){
-  m <- Leemis.m(votes)
-  d <- CG.d(votes)
-  bias.detector(m, d)
-  if(get.m == TRUE & get.d == TRUE){
-    return(as.list(c(m, d)))
-  }
-  if(get.m == TRUE & get.d == FALSE){
-    return(as.list(c(m, 0)))
-  }
-  if(get.m == FALSE & get.d == TRUE){
-    return(as.list(c(0, d)))
-  }
- 
-}
 
 Bias.stats(votes)
