@@ -68,13 +68,80 @@ Bias.stats(votes)
 
 ##Q2
 
-m <- Leemis.m(votes)
-m.star <- "*"
+
+## Functions to assign *s indicating significance to m and d
+
+
+
+m.sig = function(m){
+  if (m < .851) {
+    return ("")
+  } else {
+    if (m < .967) {
+      return ("*")
+    } else {
+      if (m < 1.212) {
+        return ("**")
+      } else {
+        if (1.212 <= m) {
+          return ("***")
+        }
+      }
+    }
+  }
+}
+
+m.star <- m.sig
+
 d <- CG.d(votes)
-d.star <- "*"
-benfords.table <- rbind(c(m, m.star), c(d, d.star))
+
+d.sig = function(d){
+  if (d < 1.212) {
+    return ("")
+  } else {
+    if (d < 1.330) {
+      return ("*")
+    } else {
+      if (d < 1.596) {
+        return ("**")
+      } else {
+        if (1.596 <= d) {
+          return ("***")
+        }
+      }
+    }
+  }
+}
+
+d.star <- d.sig
+### Coalesces above into a nice table
+benfords.table <- rbind(c(m, m.star(m)), c(d, d.star(d)))
+
+### Names the rows of the table
 rownames(benfords.table) <- c("Leemis' m:","Cho-gaines' d:")
-benfords.table
+
+### Displays final table
+print(benfords.table)
+
+print.benfords = function(votes){
+  ### Assigns values and significances
+  m <- Leemis.m(votes)
+  m.star <- m.sig
+  d <- CG.d(votes)
+  d.star <- d.sig
+  
+  ### Coalesces above into a nice table
+  benfords.table <- rbind(c(m, m.star(m)), c(d, d.star(d)))
+  
+  ### Names the rows of the table
+  rownames(benfords.table) <- c("Leemis' m:","Cho-gaines' d:")
+  colnames(benfords.table) <- c("Values", "Significance")
+  
+  ### Displays final table
+  print(benfords.table)
+}
+
+print.benfords(votes)
 
 ## display whether null hypothesis can be rejcted as well as the level of confidence
 bias.detector = function(m, d){
@@ -92,5 +159,3 @@ bias.detector = function(m, d){
   }
 }
 
-
-Bias.stats(votes)
