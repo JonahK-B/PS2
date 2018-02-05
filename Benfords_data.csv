@@ -1,0 +1,4 @@
+               Values               Significance
+Leemis' m:     "0.0631534005284338" ""          
+Cho-gaines' d: "0.225121108764501"  ""          
+A blank in the significance column indicates that we fail to reject the null hypothesis of no fraud at the 10% confidence level, * indicates rejecting the null at 10%, ** indicates rejecting the null at 5%, *** indicates rejecting the null at 1%

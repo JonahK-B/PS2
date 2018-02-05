@@ -133,7 +133,16 @@ print.benfords = function(votes){
   ### Displays key to asterisks
   cat("A blank in the significance column indicates that we fail to reject the null hypothesis of no fraud at the 10% confidence level, * indicates rejecting the null at 10%, ** indicates rejecting the null at 5%, *** indicates rejecting the null at 1%")
 }
-
+## running the function
 print.benfords(votes)
 
-
+##Creating CSV export
+Benfords.CSV <- function(votes){
+  ## creating a file to write into
+  sink(file = "Benfords_data.csv")
+  print.benfords(votes)
+  ## closing the file
+  sink()
+}
+## Running the function
+Benfords.CSV(votes)
