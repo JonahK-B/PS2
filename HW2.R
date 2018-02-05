@@ -1,5 +1,5 @@
 ##Test vote info
-votes <- c(1:1000)
+votes <- c(0:100)
 
 ##Q1
 
@@ -113,15 +113,6 @@ d.sig = function(d){
   }
 }
 
-d.star <- d.sig
-### Coalesces above into a nice table
-benfords.table <- rbind(c(m, m.star(m)), c(d, d.star(d)))
-
-### Names the rows of the table
-rownames(benfords.table) <- c("Leemis' m:","Cho-gaines' d:")
-
-### Displays final table
-print(benfords.table)
 
 print.benfords = function(votes){
   ### Assigns values and significances
@@ -139,23 +130,10 @@ print.benfords = function(votes){
   
   ### Displays final table
   print(benfords.table)
+  ### Displays key to asterisks
+  cat("A blank in the significance column indicates that we fail to reject the null hypothesis of no fraud at the 10% confidence level, * indicates rejecting the null at 10%, ** indicates rejecting the null at 5%, *** indicates rejecting the null at 1%")
 }
 
 print.benfords(votes)
 
-## display whether null hypothesis can be rejcted as well as the level of confidence
-bias.detector = function(m, d){
-  if(m < .851| d < 1.212){
-    print.default ("Cannot refute null hypothesis")
-  }
-  if(m < .967| d < 1.330){
-    print.default ("Confident in refuting null hypothesis with a 10% confidence interval")
-  }
-  if(m < 1.212| d < 1.596){
-    print.default ("Confident in refuting null hypothesis with a 5% confidence interval")
-  }
-  if(1.212 <= m| 1.596 <= d){
-    print.default ("Confident in refuting null hypothesis with a 1% confidence interval")
-  }
-}
 
