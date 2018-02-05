@@ -1,5 +1,8 @@
-
+##Test vote info
 votes <- c(1:1000)
+
+##Q1
+
 
 ##count the lead digits
 
@@ -62,6 +65,17 @@ Bias.stats = function(votes, get.m = TRUE, get.d = TRUE){
   }
 }
 Bias.stats(votes)
+
+##Q2
+
+m <- Leemis.m(votes)
+m.star <- "*"
+d <- CG.d(votes)
+d.star <- "*"
+benfords.table <- rbind(c(m, m.star), c(d, d.star))
+rownames(benfords.table) <- c("Leemis' m:","Cho-gaines' d:")
+benfords.table
+
 ## display whether null hypothesis can be rejcted as well as the level of confidence
 bias.detector = function(m, d){
   if(m < .851| d < 1.212){
