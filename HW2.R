@@ -4,7 +4,7 @@ votes <- c(0:100)
 ##Q1
 
 
-##count the lead digits
+##count the lead digits and return a frequency list
 
 countleads = function(votes){
   leads = NULL
@@ -31,7 +31,9 @@ Leemis.m = function(votes){
   m <- max(m.list) 
   return(m)
 }
+
 Leemis.m(votes)
+
 ##Cho-Gains' d statistic
 CG.d = function(votes){
   countleads(votes)
@@ -43,6 +45,7 @@ CG.d = function(votes){
   d <- sqrt(d.near)
   return(d)
 }
+
 CG.d(votes)
 
 
@@ -64,6 +67,8 @@ Bias.stats = function(votes, get.m = TRUE, get.d = TRUE){
     return(my_list)
   }
 }
+
+## Returns a frequency list of the leading variables 1 through 9, Leemis' M statistic for the data, and Cho-Gaines' D statisitic for the data
 Bias.stats(votes)
 
 ##Q2
@@ -133,7 +138,7 @@ print.benfords = function(votes){
   ### Displays key to asterisks
   cat("A blank in the significance column indicates that we fail to reject the null hypothesis of no fraud at the 10% confidence level, * indicates rejecting the null at 10%, ** indicates rejecting the null at 5%, *** indicates rejecting the null at 1%")
 }
-## running the function
+## running the function which returns a table displaying the m and d statistics along with their significances
 print.benfords(votes)
 
 ##Creating CSV export
@@ -144,5 +149,5 @@ Benfords.CSV <- function(votes){
   ## closing the file
   sink()
 }
-## Running the function
+## Running the function 
 Benfords.CSV(votes)
